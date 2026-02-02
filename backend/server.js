@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Enable CORS for frontend access
 app.use(cors());
@@ -16,22 +16,6 @@ const tokenStore = new Map();
 
 const os = require('os');
 
-// Helper to get local IP address
-function getLocalIp() {
-    const interfaces = os.networkInterfaces();
-    for (const name of Object.keys(interfaces)) {
-        for (const iface of interfaces[name]) {
-            // Skip internal (localhost) and non-IPv4 addresses
-            if (iface.family === 'IPv4' && !iface.internal) {
-                return iface.address;
-            }
-        }
-    }
-    return 'localhost';
-}
-
-const HOST_IP = getLocalIp();
-
 // Generate a one-time link
 app.post('/api/generate', (req, res) => {
     const { url } = req.body;
@@ -41,8 +25,12 @@ app.post('/api/generate', (req, res) => {
     }
 
     const token = uuidv4();
-    // Use the actual LAN IP so devices on the network can access it
-    const trackingUrl = `http://${HOST_IP}:${PORT}/s/${token}`;
+
+    // Construct the tracking URL dynamically based on the incoming request
+    // This ensures it works on localhost, Render, or any other host
+    const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+    const host = req.get('host');
+    const trackingUrl = `${protocol}://${host}/s/${token}`;
 
     tokenStore.set(token, {
         targetUrl: url,
@@ -75,5 +63,5 @@ app.get('/s/:token', (req, res) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on http://${HOST_IP}:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });

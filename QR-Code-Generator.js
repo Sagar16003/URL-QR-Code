@@ -1,3 +1,14 @@
+// Detect environment and set API base URL
+let API_BASE_URL = 'http://localhost:3000'; // Default to local backend
+
+// Check if running in production (not localhost/127.0.0.1)
+if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+  // REPLACE THIS WITH YOUR RENDER BACKEND URL AFTER DEPLOYMENT
+  // Example: API_BASE_URL = 'https://my-qr-backend.onrender.com';
+  console.warn('Production environment detected. Please update API_BASE_URL in QR-Code-Generator.js');
+  API_BASE_URL = 'https://YOUR-RENDER-BACKEND-URL.onrender.com';
+}
+
 // Function to validate URL using regular expression
 function isValidURL(url) {
   var urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
@@ -26,7 +37,7 @@ async function generateQR() {
         qrCodeDiv.innerHTML = "Generating one-time link...";
 
         // Call Backend API
-        const response = await fetch('http://localhost:3000/api/generate', {
+        const response = await fetch(`${API_BASE_URL}/api/generate`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -56,7 +67,7 @@ async function generateQR() {
 
       } catch (error) {
         console.error(error);
-        errorMessageDiv.textContent = "Failed to generate one-time link. Is the backend running?";
+        errorMessageDiv.textContent = "Failed to generate one-time link. Is the backend running? " + error.message;
         qrCodeDiv.innerHTML = "";
       }
     } else {
