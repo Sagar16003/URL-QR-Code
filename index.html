@@ -1,33 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL QR Code Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <h2>URL QR Code Generator</h2>
         <input type="text" id="urlInput" placeholder="Enter URL...">
         <div id="errorMessage" class="error-message"></div>
         <div id="qrcode"></div>
-        
+
         <button onclick="generateQR()">Generate QR Code</button>
     </div>
     <footer class="footer">
-        
-        © Copyright <script>document.write(new Date().getFullYear())</script>, Made with&nbsp;
-        <span class="text-gray">
-           &#10084; 
-        </span>&nbsp;by&nbsp;<a href="https://github.com/0xelsherif" target="_blank">0xelsherif</a>.
-        <a href="https://twitter.com/0xelsherif" target="_blank"> Following on X</a> |
-        <a href="https://github.com/0xelsherif/URL-QR-Code-Generator" target="_blank">Star me on GitHub Repo</a> |
-        <a href="https://0xelsherif.medium.com/" target="_blank">See Medium Publication</a>.
 
-   
+
+
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="QR-Code-Generator.js"></script>
 </body>
+
 </html>
