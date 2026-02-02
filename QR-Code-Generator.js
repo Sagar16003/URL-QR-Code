@@ -6,7 +6,7 @@ if (window.location.hostname !== 'localhost' && window.location.hostname !== '12
   // REPLACE THIS WITH YOUR RENDER BACKEND URL AFTER DEPLOYMENT
   // Example: API_BASE_URL = 'https://my-qr-backend.onrender.com';
   console.warn('Production environment detected. Please update API_BASE_URL in QR-Code-Generator.js');
-  API_BASE_URL = 'https://YOUR-RENDER-BACKEND-URL.onrender.com';
+  API_BASE_URL = 'https://url-qr-code.onrender.com';
 }
 
 // Function to validate URL using regular expression
